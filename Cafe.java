@@ -29,7 +29,7 @@ public class Cafe extends Building implements CafeRequirements {
     }
 
     /**     
-     * Decreases inventory depending on order
+     * Decreases inventory depending on order.
      * 
      * @param size The number of ounces of the order
      * @param nSugarPackets The number of sugar packets needed
