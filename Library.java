@@ -1,7 +1,4 @@
-import java.util.ArrayList;
 import java.util.Hashtable;
-
-import javax.management.RuntimeErrorException;
 
 /* This is a stub for the Library class */
 public class Library extends Building implements LibraryRequirements{
@@ -28,10 +25,11 @@ public class Library extends Building implements LibraryRequirements{
      * @param title Title of the book
      */
     public void addTitle(String title) {
-      if(this.collection.contains(title)){
+      if(containsTitle(title)){
         throw new RuntimeException(title +" is already in the collection. Try again with a new book.");
       }
       this.collection.put(title, true);
+
     }
   
     /**
@@ -41,7 +39,7 @@ public class Library extends Building implements LibraryRequirements{
      * @return The title of the book (that was removed)
      */
     public String removeTitle(String title) {
-      if(this.collection.contains(title)) {
+      if(containsTitle(title)) {
         this.collection.remove(title);
         return title;
       }
@@ -56,13 +54,13 @@ public class Library extends Building implements LibraryRequirements{
      * @param title The title of the book getting checked out
      */
     public void checkOut(String title) {
-      if(this.collection.contains(title)) {
-        if(this.collection.get(title) == false) {
+      if(containsTitle(title)) {
+        if(isAvailable(title) == false) {
           throw new RuntimeException(title + " has already been checked out by someone else. Please come back another time.");
         }
         this.collection.replace(title, false);
       }
-      throw new RuntimeException(title + "is not within the collection, and thus cannot be checked out. Please try again with a new book.");
+      throw new RuntimeException(title + " is NOT within the collection, and thus cannot be checked out. Please try again with a new book.");
     }
 
     /**
@@ -71,13 +69,13 @@ public class Library extends Building implements LibraryRequirements{
      * @param title The title of the book being returned
      */
     public void returnBook(String title) {
-      if(this.collection.contains(title)){
-        if(this.collection.get(title) == false) { // Check if the book was borrowed
+      if(containsTitle(title)) {
+        if(isAvailable(title) == false) { // Check if the book was borrowed
           this.collection.replace(title,true); // Then return the book
         }
-        throw new RuntimeException(title + " was not previously checked out, and thus cannot be returned.");
+        throw new RuntimeException(title + " was NOT previously checked out, and thus cannot be returned.");
       }
-      throw new RuntimeException(title + " does not exist within our collection, and thus cannot be returned.");
+      throw new RuntimeException(title + " does NOT exist within our collection, and thus cannot be returned.");
     }
 
     /**
@@ -87,7 +85,7 @@ public class Library extends Building implements LibraryRequirements{
      * @return true/false
      */
     public boolean containsTitle(String title) {
-      if(this.collection.contains(title)) {
+      if(this.collection.containsKey(title)) {
         return true;
       }
       return false;
@@ -95,12 +93,34 @@ public class Library extends Building implements LibraryRequirements{
 
     /**
      * Check if a book is available
+     * 
+     * @param title The title of the book
+     * @return true/false
      */
-    //public boolean isAvailable(String title); // returns true if the title is currently available, false otherwise
-    //public void printCollection(); // prints out the entire collection in an easy-to-read way (including checkout status)
+    public boolean isAvailable(String title) {
+      if(this.collection.get(title)) {
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * Prints out the entire collection in an easy-to-read way (including checkout status)
+     * 
+     */
+    public void printCollection() {
+      System.out.println(this.collection.toString());
+    }
 
     public static void main(String[] args) {
-      new Library();
+      Library neilson = new Library("Neilson", "7 Neilson Drive", 4);
+      String wow = new String("World of Wonders");
+      neilson.addTitle("Gut Check");
+      neilson.addTitle(wow);
+      System.out.println(neilson.containsTitle(wow));
+      neilson.printCollection();
+      neilson.checkOut(wow);
+      neilson.isAvailable(wow);
     }
   
   }
