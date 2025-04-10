@@ -28,7 +28,9 @@ public class Library extends Building implements LibraryRequirements{
       if(containsTitle(title)){
         throw new RuntimeException(title +" is already in the collection. Try again with a new book.");
       }
-      this.collection.put(title, true);
+      else {
+        this.collection.put(title, true);
+      }
 
     }
   
@@ -55,12 +57,15 @@ public class Library extends Building implements LibraryRequirements{
      */
     public void checkOut(String title) {
       if(containsTitle(title)) {
-        if(isAvailable(title) == false) {
+        if(!isAvailable(title)) {
           throw new RuntimeException(title + " has already been checked out by someone else. Please come back another time.");
         }
         this.collection.replace(title, false);
+        System.out.println(title + " is checked out. Have fun reading!");
       }
-      throw new RuntimeException(title + " is NOT within the collection, and thus cannot be checked out. Please try again with a new book.");
+      else {
+        throw new RuntimeException(title + " is NOT within the collection, and thus cannot be checked out. Please try again with a new book.");
+      }
     }
 
     /**
@@ -88,7 +93,9 @@ public class Library extends Building implements LibraryRequirements{
       if(this.collection.containsKey(title)) {
         return true;
       }
-      return false;
+      else {
+        return false;
+      }
     }
 
     /**
@@ -101,7 +108,9 @@ public class Library extends Building implements LibraryRequirements{
       if(this.collection.get(title)) {
         return true;
       }
-      return false;
+      else {
+        return false;
+      }
     }
 
     /**
@@ -120,7 +129,7 @@ public class Library extends Building implements LibraryRequirements{
       System.out.println(neilson.containsTitle(wow));
       neilson.printCollection();
       neilson.checkOut(wow);
-      neilson.isAvailable(wow);
+      System.out.println(neilson.isAvailable(wow));
     }
   
   }
