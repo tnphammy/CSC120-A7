@@ -87,10 +87,10 @@ public class House extends Building implements HouseRequirements {
 
 
   public static void main(String[] args) {
-    House Cutter = new House("Cutter", "79 Elm St.", 3, true);
+    House cutter = new House("Cutter", "79 Elm St.", 3, true);
     Student tammy = new Student("Tammy", "991472193", 2028);
-    Cutter.moveIn(tammy);
-    System.out.println(Cutter.isResident(tammy));
+    cutter.moveIn(tammy);
+    System.out.println(cutter.isResident(tammy));
 
   }
 
