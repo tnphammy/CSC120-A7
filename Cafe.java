@@ -37,12 +37,12 @@ public class Cafe extends Building implements CafeRequirements {
      */
     public void sellCoffee(int size, int nSugarPackets, int nCreams) {
         if ((this.nCoffeeOunces < size) || (this.nSugarPackets < nSugarPackets) || (this.nCreams < nCreams) || (this.nCups < 1)) {
-            restock(size, nSugarPackets, nCreams, nCups); // Restock if any inventory is insufficient
+            restock(50, 50, 50, 50); // Restock if any inventory is insufficient (Hardcoded 50 of everything)
             System.out.println("Restocking... Please hold.");
         }
-            this.nCoffeeOunces =- size;
-            this.nSugarPackets =- nSugarPackets;
-            this.nCreams =- nCreams;
+            this.nCoffeeOunces -= size;
+            this.nSugarPackets -= nSugarPackets;
+            this.nCreams -= nCreams;
             this.nCups -= 1; // Since this is one order => ONE cup is needed
             System.out.println("One cup sold! :)");
     
